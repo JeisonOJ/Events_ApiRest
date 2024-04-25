@@ -3,6 +3,9 @@ package com.jeison.api_rest_events.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jeison.api_rest_events.models.Event;
@@ -20,6 +23,21 @@ public class EventService implements IEventService{
     @Override
     public List<Event> findAll() {
         return eventRepository.findAll();
+    }
+
+    @Override
+    public Page<Event> getAllPaginated() {
+        return findPaginated(0, 0);
+    }
+
+    public Page<Event> findPaginated(int page, int size){
+        if (page<0) {
+            page = 1; 
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        return eventRepository.findAll(pageable);
+        
     }
 
     @Override
