@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jeison.api_rest_events.models.Event;
 import com.jeison.api_rest_events.services.IEventService;
@@ -26,8 +27,8 @@ public class EventController {
     private IEventService iEventService;
 
     @GetMapping({ "", "/" })
-    public ResponseEntity<List<Event>> getAllEvents() {
-        return ResponseEntity.ok(iEventService.findAll());
+    public ResponseEntity<List<Event>> getAllEvents(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        return ResponseEntity.ok(iEventService.getAllPaginated(page - 1,size).toList());
     }
     
 

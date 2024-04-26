@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class EventService implements IEventService{
+public class EventService implements IEventService {
 
     @Autowired
     private final EventRepository eventRepository;
@@ -26,18 +26,18 @@ public class EventService implements IEventService{
     }
 
     @Override
-    public Page<Event> getAllPaginated() {
-        return findPaginated(0, 0);
+    public Page<Event> getAllPaginated(int page, int size) {
+        return findPaginated(page, size);
     }
 
-    public Page<Event> findPaginated(int page, int size){
-        if (page<0) {
-            page = 1; 
+    public Page<Event> findPaginated(int page, int size) {
+        if (page < 0) {
+            page = 1;
         }
 
         Pageable pageable = PageRequest.of(page, size);
         return eventRepository.findAll(pageable);
-        
+
     }
 
     @Override
