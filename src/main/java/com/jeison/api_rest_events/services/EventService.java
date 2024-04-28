@@ -63,4 +63,9 @@ public class EventService implements IEventService {
         eventRepository.deleteById(id);
     }
 
+    @Override
+    public List<Event> findByName(String name) {
+        return eventRepository.findByNameContaining(name);
+    }
+
 }

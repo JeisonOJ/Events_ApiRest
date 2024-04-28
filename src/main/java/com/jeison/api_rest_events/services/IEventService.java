@@ -10,6 +10,8 @@ public interface IEventService {
 
     public List<Event> findAll();
 
+    public List<Event> findByName(String name);
+
     public Event findById(String id);
 
     public Event insert(Event event);

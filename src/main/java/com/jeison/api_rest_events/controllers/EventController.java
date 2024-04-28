@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class EventController {
     private IEventService iEventService;
 
     @GetMapping({ "", "/" })
+    @CrossOrigin(origins = "http://localhost:5173")
     public ResponseEntity<List<Event>> getAllEvents(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         return ResponseEntity.ok(iEventService.getAllPaginated(page - 1,size).toList());
     }
@@ -35,6 +37,12 @@ public class EventController {
     @GetMapping("search/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable String id) {
         return ResponseEntity.ok(iEventService.findById(id));
+    }
+
+    @GetMapping("search/")
+    @CrossOrigin(origins = "http://localhost:5173")
+    public ResponseEntity<List<Event>> getEventByName(@RequestParam(required = false) String name) {
+        return ResponseEntity.ok(iEventService.findByName(name));
     }
 
     @PostMapping("create")
